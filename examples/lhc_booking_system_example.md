@@ -36,6 +36,211 @@ This example shows how capabilities and workflows can be documented for the LHC 
 | W07 | Access is created or changed | New staff member, role change, or access removal request | Correct users have correct permissions | LHC Admin, ITS Support | C13, C16 |
 | W08 | Support issue is handled | User reports an issue or system problem occurs | Issue is resolved by LHC or escalated to ITS | LHC Staff, LHC Admin, ITS Support | C11, C15, C16 |
 
+## Workflow Detail Example
+
+### W01 - Guest submits booking request
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | Guest | Navigates to booking entry point and fills in guest details, stay dates, room type, and contact information | C01 | Draft | Guest may arrive via the public website (D01) |
+| 2 | System | Validates that required fields are present and formats are correct | C01 | Draft | Incomplete submissions are held on the form; no request is created |
+| 3 | System | Creates the booking request and assigns it a request ID | C01 | Pending review | Request enters the review queue |
+| 4 | System | Updates booking status to Pending review | C11 | Pending review | Status is visible to LHC Staff and LHC Admin |
+| 5 | System | Sends submission acknowledgement notification to guest | C12 | Pending review | Email sent via D04; guest receives confirmation of receipt |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Are all required fields present and valid? | Yes → request is created; No → form validation error shown to guest | System | Draft (held) or Pending review (created) |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| Email notification fails to send | Request is still created; guest is advised to contact LHC if no acknowledgement is received | System / ITS | ITS support (D04) |
+| Guest submits duplicate request for same dates | Staff identifies duplicate during review (W02) and returns or rejects the duplicate | LHC Staff | LHC Admin if unclear |
+
+---
+
+### W02 - LHC reviews booking request
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | LHC Staff | Opens pending booking request from the review queue | C03 | Pending review | |
+| 2 | LHC Staff | Checks room availability for requested dates | C02 | Pending review | Availability checked against current room inventory (D06) |
+| 3 | LHC Staff | Reviews guest details, special requirements, and operational feasibility | C03 | Pending review | |
+| 4a | LHC Staff / LHC Admin | Confirms the request if complete, available, and feasible | C04 | Confirmed | Proceeds to W03 for room assignment |
+| 4b | LHC Staff / LHC Admin | Returns incomplete request to guest for correction | C05 | Returned | Notification sent to guest with details of what is required |
+| 4c | LHC Staff / LHC Admin | Rejects request if dates unavailable or request cannot be accommodated | C05 | Rejected | Notification sent to guest explaining rejection |
+| 5 | System | Updates booking status to reflect decision | C11 | Confirmed / Returned / Rejected | |
+| 6 | System | Sends status notification to guest | C12 | Confirmed / Returned / Rejected | |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Is the room available for requested dates? | Yes → proceed to feasibility review; No → reject or offer alternate dates | LHC Staff | Rejection or alternate offer |
+| Is the request complete and feasible? | Complete and feasible → confirm; Incomplete → return; Not feasible → reject | LHC Staff / LHC Admin | Confirmed, Returned, or Rejected |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| Request has conflicting or unclear dates | Returned to guest for clarification | LHC Staff | LHC Admin if unresolved |
+| Guest does not respond to a returned request | Request remains in Returned status; LHC may close after a defined period | LHC Admin | LHC management |
+
+---
+
+### W03 - LHC confirms and assigns room
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | LHC Staff / LHC Admin | Opens confirmed booking and verifies room availability for assigned dates | C02, C04 | Confirmed | |
+| 2 | LHC Staff / LHC Admin | Assigns a specific room to the confirmed booking | C10 | Room assigned | Room assignment recorded in booking record |
+| 3 | System | Updates booking status to reflect room assignment | C11 | Room assigned | |
+| 4 | System | Records the assignment action in the audit trail | C16 | Room assigned | |
+| 5 | System | Sends booking confirmation with room details to guest | C12 | Room assigned | Email sent via D04 |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Is the preferred room available for assignment? | Yes → assign; No → assign alternate room or return to review | LHC Staff / LHC Admin | Room assigned or return to W02 |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| No suitable room is available at assignment stage | Booking is returned to review; guest is notified | LHC Admin | LHC management |
+| Guest requests a specific room type not available | LHC offers alternate option or rejects if no alternative | LHC Staff | LHC Admin |
+
+---
+
+### W04 - Booking is modified or canceled
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | Guest / LHC Staff / LHC Admin | Submits or requests a change to an existing confirmed booking | C06 / C07 | Modification requested / Cancellation requested | Guests may request via phone or email outside the system |
+| 2 | LHC Staff / LHC Admin | Verifies the request and checks availability if dates are changing | C02 | — | |
+| 3a | LHC Staff / LHC Admin | Modifies booking dates, room assignment, or guest details | C06, C10 | Modified | |
+| 3b | LHC Staff / LHC Admin | Cancels booking and releases room allocation | C07 | Canceled | Room becomes available for other bookings |
+| 4 | System | Updates booking status | C11 | Modified / Canceled | |
+| 5 | System | Records the change in the audit trail | C16 | Modified / Canceled | |
+| 6 | System | Sends notification to guest confirming the change or cancellation | C12 | Modified / Canceled | |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Is the new date range available? | Yes → proceed with modification; No → advise guest of unavailability | LHC Staff / LHC Admin | Modified or no change |
+| Is the request a modification or cancellation? | Modification → update booking; Cancellation → cancel and release room | LHC Staff / LHC Admin | Modified or Canceled |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| Modification conflicts with another booking | Offer alternate dates or cancel if no option available | LHC Staff | LHC Admin |
+| Guest requests cancellation after check-in | Handled as an operational decision outside normal workflow | LHC Admin | LHC management |
+
+---
+
+### W05 - LHC manages rooms and pricing
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | LHC Admin | Identifies need to add, edit, or deactivate a room record or update pricing | C08 / C09 | — | Triggered by operational change or management decision |
+| 2 | LHC Admin | Makes the required changes to room inventory or pricing/rate data | C08 / C09 | Updated | Changes take effect immediately for new booking checks |
+| 3 | System | Records the change in the audit trail | C16 | Updated | |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Is the room being deactivated or permanently removed? | Deactivated → room hidden from availability; Removed → record archived | LHC Admin | Room status updated |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| Room deactivation conflicts with an existing booking | Existing booking must be reassigned or canceled before deactivation | LHC Admin | LHC management |
+| Pricing update affects confirmed bookings | Existing bookings retain previously agreed rates; only new bookings use updated rates | LHC Admin | LHC management |
+
+---
+
+### W06 - LHC reviews booking activity
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | LHC Admin / LHC Management | Identifies reporting need (occupancy, bookings, cancellations, guest stays) | C14 | — | Triggered by management review cycle or ad hoc request |
+| 2 | LHC Admin | Selects report type and filters (date range, room type, status) | C14 | — | |
+| 3 | System | Generates and displays the requested report | C14 | Report produced | |
+| 4 | LHC Admin / LHC Management | Reviews report and identifies any actions required | C09, C11 | — | May trigger W04 (modification/cancellation) or W05 (pricing update) |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Does the report identify issues requiring action? | Yes → initiate relevant workflow; No → review complete | LHC Admin / LHC Management | Action initiated or none required |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| Report data is incomplete or inaccurate | Reported as an issue and escalated to ITS (W08) | LHC Admin | ITS Support |
+
+---
+
+### W07 - Access is created or changed
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | LHC Admin / ITS Support | Receives request to create, modify, or remove user access | C13 | — | Triggered by onboarding, role change, or offboarding |
+| 2 | LHC Admin | Verifies the request against the approved roles and access matrix | C13 | — | |
+| 3 | LHC Admin / ITS Support | Creates account, assigns role, updates access, or removes access | C13 | Access updated | |
+| 4 | System | Records the access change in the audit trail | C16 | Access updated | |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Is the requested role approved for the user? | Yes → proceed; No → escalate to LHC management for approval | LHC Admin | Access granted or escalated |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| Urgent access removal (e.g. staff departure) | Access removed immediately; formal record updated afterwards | LHC Admin / ITS Support | LHC management |
+| Role not defined in the access matrix | Access not granted until role is formally defined and approved | LHC Admin | LHC management |
+
+---
+
+### W08 - Support issue is handled
+
+| Step | Actor | Action | Capability used | Status/result | Notes |
+|---|---|---|---|---|---|
+| 1 | LHC Staff / LHC Admin | User reports an issue (booking error, access problem, system error) | C15 | Issue reported | |
+| 2 | LHC Staff / LHC Admin | Reviews the issue and determines if it is an operational or technical matter | C11, C15 | Under review | |
+| 3a | LHC Admin | Resolves operational issues (booking corrections, access adjustments) | C15, C16 | Resolved | |
+| 3b | LHC Admin | Escalates technical or system issues to ITS Support | C15 | Escalated | |
+| 4 | ITS Support | Investigates and resolves technical issue | C15 | Resolved | |
+| 5 | System | Records issue and resolution in the audit trail | C16 | Resolved | |
+
+#### Decision points
+
+| Decision | Options | Decision owner | Resulting status/action |
+|---|---|---|---|
+| Is the issue operational or technical? | Operational → LHC Admin resolves; Technical → escalate to ITS | LHC Admin | Resolved or Escalated |
+
+#### Exceptions and alternate paths
+
+| Exception | Handling | Owner | Escalation path |
+|---|---|---|---|
+| ITS cannot reproduce the issue | LHC Admin provides additional evidence; ITS re-investigates | LHC Admin / ITS Support | ITS management |
+| Issue recurs after resolution | Treated as a new issue; root cause investigation initiated | LHC Admin / ITS Support | LHC management / ITS management |
+
+---
+
 ## Example Application Dependencies Register
 
 | ID | Dependency | Type | Purpose | Owner | Impact if unavailable | Support path |

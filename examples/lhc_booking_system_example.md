@@ -221,10 +221,11 @@ This example shows how capabilities and workflows can be documented for the LHC 
 |---|---|---|---|---|---|
 | 1 | LHC Staff / LHC Admin | User reports an issue (booking error, access problem, system error) | C15 | Issue reported | |
 | 2 | LHC Staff / LHC Admin | Reviews the issue and determines if it is an operational or technical matter | C11, C15 | Under review | |
-| 3a | LHC Admin | Resolves operational issues (booking corrections, access adjustments) | C15, C16 | Resolved | |
+| 3a | LHC Admin | Resolves operational issues (booking corrections, access adjustments) | C15 | Resolved | |
 | 3b | LHC Admin | Escalates technical or system issues to ITS Support | C15 | Escalated | |
-| 4 | ITS Support | Investigates and resolves technical issue | C15 | Resolved | |
-| 5 | System | Records issue and resolution in the audit trail | C16 | Resolved | |
+| 4a | System | Records operational resolution in the audit trail (follows 3a) | C16 | Resolved | |
+| 4b | ITS Support | Investigates and resolves technical issue (follows 3b) | C15 | Resolved | |
+| 5 | System | Records escalation outcome in the audit trail (follows 4b) | C16 | Resolved | |
 
 #### Decision points
 

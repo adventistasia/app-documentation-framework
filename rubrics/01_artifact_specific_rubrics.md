@@ -43,6 +43,8 @@ Use these criteria in addition to the Universal Documentation Rubric.
 | WF-08 | Statuses | Statuses used in workflows are documented and consistent with lifecycle guide. |
 | WF-09 | Manual steps | Work outside the system is disclosed. |
 | WF-10 | Exceptions | Common failure or alternate paths are included. |
+|WF-11 | Workflow boundary and cohesion | Each workflow covers one primary trigger-to-outcome process with clear boundaries and ownership. Workflows with multiple unrelated triggers, independently valuable outcomes, different owners, or separate status lifecycles are split into separate entries |
+| WF-12 | Appropriate level of detail | Workflow steps describe business-level actions consistently. No entry mixes UI-level click instructions with process summaries. All entries are at the same L1 business-process level |
 
 ## DOC-04 - Roles and Access Matrix
 

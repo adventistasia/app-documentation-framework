@@ -1,0 +1,9 @@
+[
+  {"rule": "X-02", "severity": "High"},
+  {"rule": "X-03", "severity": "High"},
+  {"rule": "X-12", "severity": "High"},
+  {"rule": "X-19", "severity": "High"},
+  {"rule": "X-21", "severity": "High"},
+  {"rule": "X-25", "severity": "High"},
+  {"rule": "X-26", "severity": "High"}
+]

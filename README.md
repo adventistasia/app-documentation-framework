@@ -19,6 +19,7 @@ Start here:
 - `02_document_set_register.md` - full document set, purpose, production method, and questions answered
 - `templates/` - markdown templates for each document
 - `rubrics/` - universal and artifact-specific acceptance criteria
+- [Task Review Rubric](rubrics/03_task_review_rubric.md) - assess coding-agent task instructions before implementation
 - `review/` - audit output template, verifier rules, and package gates
 - `examples/lhc_booking_system_example.md` - sample capabilities and workflows for the LHC Booking System
 - `agent_prompts/` - prompts for producing and auditing artifacts

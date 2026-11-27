@@ -1,103 +1,105 @@
-# Documentation Artifact Review Result
+# Audit Result: <Application> – <DOC-ID> <Title>
 
-## 1. Audit Scope
+> **Guide:** one audit result per document review, or one per package review (then section 3 lists every document). Store it outside `/docs`, for example in the pull request or `docs/reviews/`. Findings use the Bug / Risk / Idea format and IDs `A-BUG-xx`, `A-RISK-xx`, `A-IDEA-xx` ([conventions §8](../02_conventions.md#8-review-finding-ids)). Results and decisions follow [rubrics/04_decision_rules.md](../rubrics/04_decision_rules.md); do not invent other categories.
 
-Application: [Application name]  
-Artifact reviewed: [Document name]  
-Artifact version/date: [Version or date]  
-Review pass: Pass 1 / Pass 2 / Final Acceptance  
-Reviewer: [Automated review agent / human reviewer]  
-Related artifacts checked:
+## 1. Review scope
 
-- [Artifact]
-- [Artifact]
+| Field | Value |
+|---|---|
+| Application | |
+| Document reviewed | <DOC-ID> <Title>, version <x.y> |
+| Depth in Scope Record | S / D / D+ (SP-00 version <x.y>) |
+| Review type | Stage <n> review / Go-live package review / Change review / Stale re-review |
+| Reviewer | <name or agent and run reference> |
+| Date | |
+| Related documents read | <DOC-IDs and versions> |
+| Linter run | `python3 tools/doclint.py package <path>` on <commit or date> |
 
-## 2. Review Decision
+## 2. Rubric summary
 
-Status: Pass / Partial / Fail  
-Acceptance recommendation: Accept / Accept with Conditions / Revise and Resubmit / Reject
+Universal: <n> Pass · <n> Partial · <n> Fail · <n> Not in scope or not applicable
+Artifact: <n> Pass · <n> Partial · <n> Fail · <n> Not in scope or not applicable
+Critical criteria not passing: <n> (<IDs>)
+Open findings: <n> High · <n> Medium · <n> Low
 
-Summary:
+## 3. Universal rubric results
 
-[Short explanation of the decision.]
+> **Guide:** for an S-depth item, write "Covered by the parent's review" and skip to section 4.
 
-## 3. Universal Rubric Results
+| ID | Criterion | Result | Evidence |
+|---|---|---|---|
+| U-01 | Identity | | |
+| U-02 | Purpose | | |
+| U-03 | Scope | | |
+| U-04 | Required structure | | |
+| U-05 | Specificity | | |
+| U-06 | Language for its readers | | |
+| U-07 | Traceability | | |
+| U-08 | Usable for its readers | | |
+| U-09 | Limitations and unknowns visible | | |
+| U-10 | Ownership | | |
+| U-11 | Consistency | | |
+| U-12 | Acceptance readiness | | |
+| U-13 | Says it once | | |
 
-| ID | Criterion | Result | Evidence | Notes |
+## 4. Artifact rubric results
+
+| ID | Criterion | Critical | Result | Evidence |
 |---|---|---|---|---|
-| U-01 | Identity | Pass / Partial / Fail / N/A |  |  |
-| U-02 | Purpose | Pass / Partial / Fail / N/A |  |  |
-| U-03 | Scope | Pass / Partial / Fail / N/A |  |  |
-| U-04 | Required structure | Pass / Partial / Fail / N/A |  |  |
-| U-05 | Specificity | Pass / Partial / Fail / N/A |  |  |
-| U-06 | Plain language | Pass / Partial / Fail / N/A |  |  |
-| U-07 | Traceability | Pass / Partial / Fail / N/A |  |  |
-| U-08 | Operational usability | Pass / Partial / Fail / N/A |  |  |
-| U-09 | Risk and limitation visibility | Pass / Partial / Fail / N/A |  |  |
-| U-10 | Ownership and accountability | Pass / Partial / Fail / N/A |  |  |
-| U-11 | Consistency | Pass / Partial / Fail / N/A |  |  |
-| U-12 | Acceptance readiness | Pass / Partial / Fail / N/A |  |  |
+| <DOC-ID>.1 | | Yes / No | | |
 
-## 4. Artifact-Specific Criteria
+## 5. Cross-document rules
 
-| ID | Criterion | Result | Evidence | Notes |
-|---|---|---|---|---|
-| [Criterion ID] | [Criterion] | Pass / Partial / Fail / N/A | [Evidence] | [Comment] |
+> **Guide:** copy mechanical results from the linter; judge only the Judgment rules.
 
-## 5. Coherence Checks
-
-| Check | Result | Notes |
-|---|---|---|
-| Related document references are valid | Pass / Partial / Fail |  |
-| Role names are consistent | Pass / Partial / Fail |  |
-| Workflow IDs are consistent | Pass / Partial / Fail |  |
-| Capability IDs are consistent | Pass / Partial / Fail |  |
-| Status names are consistent | Pass / Partial / Fail |  |
-| Dependency references are consistent | Pass / Partial / Fail |  |
-| Known limitations are carried to handover | Pass / Partial / Fail |  |
+| Rule | Type | Result | Evidence |
+|---|---|---|---|
+| X-xx | Mechanical / Judgment | Pass / Fail / Not in scope | |
 
 ## 6. Findings
 
-### Bugs
+Severity definitions: [decision rules §4](../rubrics/04_decision_rules.md#4-severity).
 
-Items that make the document incorrect, inconsistent, or unusable.
+### Bugs
 
 | ID | Finding | Severity | Evidence | Required action |
 |---|---|---|---|---|
-| BUG-01 |  | High / Medium / Low |  |  |
+| A-BUG-01 | | High / Medium / Low | | |
 
 ### Risks
 
-Items that may cause operational, governance, support, or acceptance problems.
-
-| ID | Finding | Severity | Evidence | Required action or mitigation |
+| ID | Finding | Severity | Evidence | Mitigation or required action |
 |---|---|---|---|---|
-| RISK-01 |  | High / Medium / Low |  |  |
+| A-RISK-01 | | High / Medium / Low | | |
 
 ### Ideas
 
-Non-blocking improvements.
-
 | ID | Finding | Value | Evidence | Suggested action |
 |---|---|---|---|---|
-| IDEA-01 |  | High / Medium / Low |  |  |
+| A-IDEA-01 | | High / Medium / Low | | |
 
-## 7. Required Fixes Before Acceptance
+## 7. Required fixes
 
-- [Required fix]
+| Finding | Fix | Owner |
+|---|---|---|
+| | | |
 
-## 8. Conditional Acceptance Items
+## 8. Proposed conditions
 
-- [Condition]
+> **Guide:** only for Accept with Conditions. Each condition becomes a `COND-xx` row in SP-12 with owner, target date and the accepting owner's agreement.
 
-## 9. Final Recommendation
+| Finding | Condition | Owner | Target date |
+|---|---|---|---|
+| | | | |
 
-Recommendation: Accept / Accept with Conditions / Revise and Resubmit / Reject
+## 9. Decision
 
-Reason:
+Decision: **Accept / Accept with Conditions / Revise and Resubmit / Reject**
 
-[Brief explanation.]
+Decision rule applied: <row of the decision table in rubrics/04_decision_rules.md §5 or §6, and why it applies>
 
-Next action:
+Next action: <who does what next>
 
-[What should happen next.]
+## 10. Framework feedback (optional, never affects the decision)
+
+<Blind spots in the framework noticed during this review.>

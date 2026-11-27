@@ -1,0 +1,63 @@
+# Source files for consolidated_guide.md, in reading order.
+# One repo-relative path per line; `#` starts a comment; blank lines are ignored.
+# Every markdown file in the repository (except consolidated_guide.md, releases/,
+# tests/ and examples/) must be listed here; build_consolidated.py --check enforces it.
+
+README.md
+00_documentation_model.md
+01_document_set_register.md
+02_conventions.md
+03_scoping_guide.md
+
+# Templates: spine
+templates/spine/SP-00-scope-record.md
+templates/spine/SP-01-glossary.md
+templates/spine/SP-10-success-measures.md
+templates/spine/SP-11-acceptance-criteria-and-verification.md
+templates/spine/SP-12-acceptance-and-handover-record.md
+
+# Templates: business layer
+templates/business/BUS-01-overview-and-business-case.md
+templates/business/BUS-02-capabilities-register.md
+templates/business/BUS-03-business-process-register.md
+templates/business/BUS-04-roles-and-access-matrix.md
+templates/business/BUS-05-business-rules-and-status-lifecycle.md
+templates/business/BUS-06-data-reports-and-notifications.md
+templates/business/BUS-07-resource-and-cost-model.md
+templates/business/BUS-08-risk-and-controls-register.md
+templates/business/BUS-09-user-and-admin-guide.md
+
+# Templates: engineering layer
+templates/engineering/ENG-01-requirements-specification.md
+templates/engineering/ENG-02-user-journeys.md
+templates/engineering/ENG-03-architecture-and-design.md
+templates/engineering/ENG-04-data-model.md
+templates/engineering/ENG-05-integrations-and-dependencies.md
+templates/engineering/ENG-06-configuration-and-environments.md
+templates/engineering/ENG-07-deployment-and-release.md
+templates/engineering/ENG-08-operations-and-support-runbook.md
+templates/engineering/ENG-09-developer-and-agent-guide.md
+templates/engineering/ENG-10-decision-log.md
+
+# Rubrics
+rubrics/00_universal_rubric.md
+rubrics/01_business_rubrics.md
+rubrics/02_engineering_rubrics.md
+rubrics/03_spine_rubrics.md
+rubrics/04_decision_rules.md
+
+# Review
+review/01_audit_result_template.md
+review/02_cross_document_rules.md
+review/03_package_gates.md
+review/04_review_process.md
+review/05_linter_spec.md
+
+# Agent prompts
+agent_prompts/scoping.md
+agent_prompts/producer_forward.md
+agent_prompts/producer_reverse.md
+agent_prompts/reviewer.md
+agent_prompts/verifier.md
+
+CHANGELOG.md
